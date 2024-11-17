@@ -102,8 +102,8 @@ for i = 1:size(individuals, 1)
     weight = individuals(i, 2);
     
     % Calculate probabilities for each class using 1D Normal PDFs
-    p_male_given_data = p_male * normpdf(height, mean_height_male, sqrt(var_height_male)) * normpdf(weight, mean_weight_male, sqrt(var_weight_male));
-    p_female_given_data = p_female * normpdf(height, mean_height_female, sqrt(var_height_female)) * normpdf(weight, mean_weight_female, sqrt(var_weight_female));
+    p_male_given_data = p_male * mvnpdf(height, mean_height_male, sqrt(var_height_male)) * mvnpdf(weight, mean_weight_male, sqrt(var_weight_male));
+    p_female_given_data = p_female * mvnpdf(height, mean_height_female, sqrt(var_height_female)) * mvnpdf(weight, mean_weight_female, sqrt(var_weight_female));
     
     % Decide based on the higher probability
     if p_male_given_data > p_female_given_data
