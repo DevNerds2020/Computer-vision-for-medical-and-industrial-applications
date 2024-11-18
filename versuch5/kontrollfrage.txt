@@ -1,0 +1,11 @@
+1.
+k-Means kann X3 nicht korrekt clustern, weil es annimmt, dass Cluster kugelförmig sind.
+Wenn die Daten komplexe Formen wie Ringe oder Spiralen haben, kann k-Means diese Strukturen nicht erfassen.
+
+2.
+Die Elbow-Methode funktioniert nicht immer, da die Kurve oft keinen klaren Knick zeigt.
+Bei schlecht getrennten oder komplexen Daten fällt es schwer, die optimale Clusteranzahl zu bestimmen.
+
+3.
+k-Means ist schnell und funktioniert gut für kugelförmige Cluster, braucht aber die Clusteranzahl vorher.
+Mean-Shift erkennt Cluster jeder Form, ist aber langsamer und rechenintensiver.

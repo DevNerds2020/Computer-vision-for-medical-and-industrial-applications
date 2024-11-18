@@ -146,3 +146,53 @@ hold on;
 [y, x] = find(detected_cells == 1);
 plot(x, y, 'r.', 'MarkerSize', 10);
 title('Detected Cells');
+
+%%
+%% Add Mean Shift to Cluster Detected Cells
+
+% Sliding window detection process
+window_size = size(cell_mask);  % Assuming cell mask is 101x101 pixels
+step_size = 9;  % Window step size for sliding
+
+detected_cells = zeros(size(img));  % Initialize detected cells image
+detected_centers = [];  % Array to store coordinates of detected cell centers
+
+for row = 1:step_size:size(img, 1) - window_size(1) + 1
+    for col = 1:step_size:size(img, 2) - window_size(2) + 1
+        window = img(row:row + window_size(1) - 1, col:col + window_size(2) - 1);
+        
+        % Calculate feature for the current window
+        nucleus_mean = mean(window(cell_mask == 1));
+        wall_mean = mean(window(cell_mask == -1));
+        feature_value = nucleus_mean - wall_mean;
+
+        % Detect cell if feature value exceeds threshold
+        if feature_value >= threshold
+            detected_centers = [detected_centers; row + round(window_size(1) / 2), col + round(window_size(2) / 2)];  % Add center of window
+        end
+    end
+end
+
+% Apply Mean Shift to cluster detected cell centers
+if ~isempty(detected_centers)
+    % Call the meanshift function to find clusters (you can adjust bandwidth `b` as needed)
+    [L] = meanshift(detected_centers, 10, 1);  % Example bandwidth = 10, visualization every iteration
+
+    % Get the final cluster centers
+    cluster_centers = zeros(max(L), 2);
+    for i = 1:max(L)
+        cluster_centers(i, :) = mean(detected_centers(L == i, :), 1);  % Mean center for each cluster
+    end
+    
+    % Display the image and plot the detected clusters
+    figure;
+    imshow(img);
+    hold on;
+
+    % Plot each cluster center
+    for i = 1:size(cluster_centers, 1)
+        plot(cluster_centers(i, 2), cluster_centers(i, 1), 'go', 'MarkerSize', 10, 'LineWidth', 2);  % Green circles for clusters
+    end
+
+    title('Detected Cells (Clusters)');
+end
