@@ -1,0 +1,17 @@
+a) Why is the χ² test used for comparing histograms?
+It quantifies similarity by calculating normalized squared differences between bins.
+Value 0: Identical histograms.
+Value 1: Maximum difference.
+
+b) What does the confusion matrix describe?
+It shows classification performance: true labels vs. predicted labels.
+Easier digits: Clear, distinct shapes (e.g., "1").
+Harder digits: Similar features (e.g., "8" and "3").
+
+c) Describe the distance measure D(P,Q)D(P, Q).
+It sums differences across bins: D(P,Q)=∑(P−Q)2P+QD(P, Q) = \sum \frac{(P - Q)^2}{P + Q}.
+
+d) Is the shape descriptor invariant to translation, rotation, and scaling?
+Translation: Yes, by centering points.
+Rotation/Scaling: No, but normalization (e.g., aligning principal axes, scaling radii) ensures invariance.
+

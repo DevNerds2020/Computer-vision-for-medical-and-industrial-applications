@@ -176,7 +176,7 @@ end
 % Apply Mean Shift to cluster detected cell centers
 if ~isempty(detected_centers)
     % Call the meanshift function to find clusters (you can adjust bandwidth `b` as needed)
-    [L] = meanshift(detected_centers, 10, 1);  % Example bandwidth = 10, visualization every iteration
+    [L] = meanshift(detected_centers, 15, 1);  % Example bandwidth = 10, visualization every iteration
 
     % Get the final cluster centers
     cluster_centers = zeros(max(L), 2);

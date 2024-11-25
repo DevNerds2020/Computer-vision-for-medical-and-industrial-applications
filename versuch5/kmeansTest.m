@@ -33,12 +33,12 @@ plotClusterResults(X, L);  % Ergebnisse plotten
 
 %%
 load('test_data_clustering.mat');  % Annahme: X1, X2, X3, X4 sind in der Datei enthalten
-testinput = X2;
+testinput = X5;
 %%
 elbowMethod(testinput, 1, 10);
 
 %%
-k = 3;  % Da wir 4 Gruppen erwarten
+k = 2;  % Da wir 4 Gruppen erwarten
 w = ones(size(testinput, 1), 1);  % Alle Gewichte auf 1 setzen
 L = kmeans(testinput, w, k);  % Clusterzuweisungen mit der kmeans-Funktion
 L2 = kmeansUpdated(testinput, w, k, 1000, 10);

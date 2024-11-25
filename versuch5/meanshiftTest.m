@@ -3,11 +3,11 @@
 load('test_data_clustering.mat');
 
 % Parameters
-bandwidth = 0.5; % Example bandwidth value
-visualize = 0; % No visualization for speed
+bandwidth = 1; % Example bandwidth value
+visualize = 1; % No visualization for speed
 
 % Apply mean-shift clustering
-[L, C] = meanshift(X2, bandwidth, visualize);
+[L, C] = meanshift(X1, bandwidth, visualize);
 
 % Display results
 disp('Cluster Labels:');
@@ -17,6 +17,6 @@ disp(C);
 
 figure;
 hold on;
-plotClusterResults(X2, L)
+plotClusterResults(X1, L)
 
 %%
