@@ -23,7 +23,7 @@ for it = 1:size(train_data, 3)
     % disp(['Number of edge points: ', num2str(size(X, 1))]);
 
     
-    SC_train(:, :, it) = scComputeMultiplePoints([0.5, 0.5], X, nBinsTheta, nBinsR, rMin, rMax);
+    SC_train(:, :, it) = scCompute([0.5, 0.5], X, nBinsTheta, nBinsR, rMin, rMax);
 end
 
 %% Shape Context für alle Testdaten bestimmen und klassifizieren
@@ -38,7 +38,7 @@ for it = 1:size(test_data, 3)
     X = getEdgePoints(img, 50);
 
     % Compute Shape Context for the test data
-    SC = scComputeMultiplePoints([0.5, 0.5], X, nBinsTheta, nBinsR, rMin, rMax);
+    SC = scCompute([0.5, 0.5], X, nBinsTheta, nBinsR, rMin, rMax);
 
     % Debugging: Display size and bin consistency for test and train
     disp(['SC (test data) size: ', mat2str(size(SC))]);
@@ -51,7 +51,7 @@ for it = 1:size(test_data, 3)
         disp(['nBinsTheta (test): ', num2str(size(SC, 2)), ' vs nBinsTheta (train): ', num2str(size(SC_train(:, :, it_train), 2))]);
 
         % Compute histogram cost
-        HC(it_train) = histCostMultiplePoints(SC, SC_train(:, :, it_train));
+        HC(it_train) = histCost(SC, SC_train(:, :, it_train));
     end
     
     % Nearest neighbor classification

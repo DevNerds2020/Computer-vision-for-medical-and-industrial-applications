@@ -1,0 +1,7 @@
+a) Nein, die Implementierung aus Aufgabe 1 funktioniert nur für lineare Optimierungsprobleme
+mit zwei Variablen, da sie auf grafischer Darstellung basiert.
+Probleme mit mehr Variablen oder nichtlinearen Funktionen sind damit nicht lösbar.
+
+b) Bei der graphischen Methode erkennt man unendlich viele optimale Lösungen,
+wenn die Zielfunktion parallel zu einer Begrenzungslinie des zulässigen Bereichs liegt,
+die mindestens einen Teil des Bereichs überlappt.
