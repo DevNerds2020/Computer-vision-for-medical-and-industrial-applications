@@ -6,10 +6,9 @@ function graphicalMethod(f, A, b)
     if length(f) ~= 2 || size(A, 2) ~= 2
         error('This function only supports 2D linear optimization problems.');
     end
-
-    % Scale the objective function
-    scaling_factor = max(b) / max(f); % You can adjust this as needed
-    f_scaled = f * scaling_factor;
+     % Scale the objective function
+    scaling_factor = max(abs(b)); % You can adjust this as needed
+    f_scaled = f / scaling_factor;
 
     % Define a grid for plotting constraints and the feasible region
     x1_range = linspace(0, max(b ./ max(A, [], 2)) * 1.1, 500); % Adjust range based on constraints
@@ -30,8 +29,8 @@ function graphicalMethod(f, A, b)
     X2_feasible = X2(feasible_mask);
     scatter(X1_feasible, X2_feasible, 1, 'g', 'filled', 'DisplayName', 'Feasible Region');
 
-    % Plot the scaled objective vector (direction of optimization)
-    quiver(0, 0, f_scaled(1), f_scaled(2), 'r', 'LineWidth', 2, 'DisplayName', 'Objective Direction (Scaled)');
+    % Plot the objective vector (direction of optimization)
+    quiver(0, 0, f(1), f(2), 'r', 'LineWidth', 2, 'DisplayName', 'Objective Direction');
 
     % Add labels and legends
     xlabel('x_1');
@@ -56,7 +55,7 @@ function graphicalMethod(f, A, b)
         % Check if the selected point is feasible
         point = [x1; x2];
         if all(A * point <= b) && all(point >= 0)
-            obj_value = f' * point; % Use the original f for actual calculations
+            obj_value = f' * point;
             fprintf('Point (%.2f, %.2f) is valid. Objective value: %.2f\n', x1, x2, obj_value);
             if obj_value > max_value
                 max_value = obj_value;

@@ -23,7 +23,7 @@ graphicalMethod(f, A, b);
 % a) Solving the optimization problems using linprog
 
 %% Case i
-f = [30; 20]; % Negate for maximization
+f = -[30; 20]; % Negate for maximization
 A = [2, 1; 1, 1; 1, 0];
 b = [1500; 1200; 500];
 LB = [0; 0]; % Non-negativity constraint
