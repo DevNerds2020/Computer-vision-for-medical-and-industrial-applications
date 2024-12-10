@@ -1,0 +1,21 @@
+1) 
+-Sum of Absolute Difference: Berechnet Pixelweise den Differenzbetrag von zwei Pixeln 
+Diese Differenz wird dann zusammenaddiert.
+
+-Sum of Squared Differencec: Ähnlich wie SAD, also pixelweise Unterschied aber zwischen
+zwei Ausschnitten aber hier anstatt Betrag wird der Quadrat genommen.
+
+-Normalised Cross Correlation: Bei dieser Metrik wird auch nachbarregionen zur Berechnung 
+mitgenommen. Anstatt pixelweise zwei Abschnitte zu subtrahieren, hier wird die covariance zwischen zwei Windows
+werden mit der Varianzen der Windows dividiert.
+
+
+2) 
+-Hochfrequentes Rauschen kann zu probleme führen, da der Algorithmus kann vielleicht denken dass,
+die selbe strukturen wieder vorkommen, obwohl dass der nicht der Fall ist.
+
+3) Beim pixelweise bekommen die verdeckte Bildpunkte schon ein Disparität Wert aber, es wird nicht richtig
+sein und zu Rauschen im Plot führen. Wenn die SAD SSD und NCC mit Fenstern gemacht wird, dass kann die nicht gefundene 
+Pixeln(Rauschen) unterdrücken, aber Details von Bilder werden auch verloren
+Bei der DTW, weil die Optimale Cost und Weg zwischen Abschnitte gefunden wird, es kann sein, dass die verdeckte Bildpunkte nicht
+berücksictight werden.
