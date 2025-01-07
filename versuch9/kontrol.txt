@@ -1,0 +1,8 @@
+How many points are minimally required for calibration? Why?
+At least 6 points are needed to provide enough equations 
+to solve for the 11 unknown parameters of the 3×4
+P (since one parameter is fixed due to scale ambiguity).
+
+Why do more points improve calibration quality?
+More points reduce the effect of noise and errors in the measurements,
+leading to a more robust estimation of the projection matrix.
