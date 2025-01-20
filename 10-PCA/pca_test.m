@@ -84,3 +84,92 @@ end
 hold off;
 
 disp(['Mean Squared Reconstruction Error: ', num2str(reconstruction_error)]);
+
+
+%% Reconstruct 3D points from 2D-reconstructed points and compute error
+% Project the reconstructed 2D points back to 3D using the principal axes
+reconstructed_3D_from_2D = principal_axes_2D * (principal_axes_2D' * X_centered) + mean_X;
+
+% Compute the mean squared error between the original and re-reconstructed 3D points
+reconstruction_error_3D = mean(sum((X - reconstructed_3D_from_2D).^2, 1));
+
+% Plot original and re-reconstructed points in 3D
+figure(5);
+plot3(X(1, :), X(2, :), X(3, :), 'xb'); hold on; axis equal;
+plot3(reconstructed_3D_from_2D(1, :), reconstructed_3D_from_2D(2, :), reconstructed_3D_from_2D(3, :), 'om');
+for i = 1:n
+    plot3([X(1, i), reconstructed_3D_from_2D(1, i)], ...
+          [X(2, i), reconstructed_3D_from_2D(2, i)], ...
+          [X(3, i), reconstructed_3D_from_2D(3, i)], 'k--');
+end
+hold off;
+legend('Original Points', 'Reconstructed from 2D');
+disp(['Mean Squared Reconstruction Error (3D from 2D): ', num2str(reconstruction_error_3D)]);
+%%
+% Compute the mean squared error between the original and initially reconstructed 3D points
+reconstruction_error_3D = mean(sum((X - reconstructed_3D_from_2D).^2, 1));
+
+% Plot original and initially reconstructed points in 3D
+figure(5);
+plot3(X(1, :), X(2, :), X(3, :), 'xb'); hold on; axis equal;
+plot3(reconstructed_3D_from_2D(1, :), reconstructed_3D_from_2D(2, :), reconstructed_3D_from_2D(3, :), 'om');
+for i = 1:n
+    plot3([X(1, i), reconstructed_3D_from_2D(1, i)], ...
+          [X(2, i), reconstructed_3D_from_2D(2, i)], ...
+          [X(3, i), reconstructed_3D_from_2D(3, i)], 'k--');
+end
+hold off;
+legend('Original Points', 'Initially Reconstructed Points');
+disp(['Mean Squared Reconstruction Error (Initial 3D Reconstruction): ', num2str(reconstruction_error_3D)]);
+%% Generate random 3D points
+n = 50;
+X = zeros(3, n);
+
+sx = 3;   tx = 5;
+sy = 1;   ty = -3;
+sz = 0.5; tz = -2;
+
+X(1, :) = sx * randn(1, n) + tx;
+X(2, :) = sy * randn(1, n) + ty;
+X(3, :) = sz * randn(1, n) + tz;
+
+% Apply rotations
+w1 = 60; w2 = 30; w3 = 0;
+R1 = [cosd(w1) -sind(w1) 0; sind(w1) cosd(w1) 0; 0 0 1];
+R2 = [cosd(w2) 0 sind(w2); 0 1 0; -sind(w2) 0 cosd(w2)];
+R3 = [1 0 0; 0 cosd(w3) -sind(w3); 0 sind(w3) cosd(w3)];
+X = R3 * R2 * R1 * X;
+
+figure(1);
+plot3(X(1, :), X(2, :), X(3, :), 'xb'); axis equal;
+title('Original 3D Points');
+
+%% Compute principal components (PCA)
+mean_X = mean(X, 2);
+X_centered = X - mean_X;
+cov_matrix = (1 / (n - 1)) * (X_centered * X_centered');
+[eig_vectors, eig_values_matrix] = eig(cov_matrix);
+eig_values = diag(eig_values_matrix);
+
+% Projection of data onto the principal components (PCs)
+projection_matrix = eig_vectors' * X_centered;
+
+% Reconstruct the data using the projection matrix and the principal components
+reconstructed_3D_from_PCA = eig_vectors * projection_matrix + mean_X;
+
+% Compute mean squared reconstruction error
+reconstruction_error_3D = mean(sum((X - reconstructed_3D_from_PCA).^2, 1));
+
+% Plot original and reconstructed points in 3D
+figure(2);
+plot3(X(1, :), X(2, :), X(3, :), 'xb'); hold on; axis equal;
+plot3(reconstructed_3D_from_PCA(1, :), reconstructed_3D_from_PCA(2, :), reconstructed_3D_from_PCA(3, :), 'om');
+for i = 1:n
+    plot3([X(1, i), reconstructed_3D_from_PCA(1, i)], ...
+          [X(2, i), reconstructed_3D_from_PCA(2, i)], ...
+          [X(3, i), reconstructed_3D_from_PCA(3, i)], 'k--');
+end
+hold off;
+legend('Original Points', 'Reconstructed Points from PCA');
+title('3D Reconstruction Using PCA');
+disp(['Mean Squared Reconstruction Error (PCA): ', num2str(reconstruction_error_3D)]);

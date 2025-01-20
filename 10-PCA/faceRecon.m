@@ -48,7 +48,7 @@ F_centered = F - mean_face;
 %% b) Visualisieren Sie 4 Hauptkomponenten (z.B. 1, 50, 100, 300)
 % Verwenden Sie imagesc oder normalisieren Sie die Bilder.
 figure(2);
-components = [1, 50, 100, 300];
+components = [1, 2, 3, 4];
 for i = 1:4
     subplot(2, 2, i);
     imagesc(reshape(U(:, components(i)), six, siy));
